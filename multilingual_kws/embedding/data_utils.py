@@ -1,3 +1,7 @@
+from pydantic import BaseModel
+
+from typing import List
+
 from datasets import concatenate_datasets, load_dataset, Dataset
 from collections import defaultdict
 from pathlib import Path
@@ -10,11 +14,41 @@ import IPython
 
 
 SEARCH_SPLITS = ['train', 'test', 'dev']
+FEW = 5
 
 
-def add_assets(assets):
+class AssetPack(BaseModel):
+  background_noise_path: str
+  unknown_files: List[str]
+
+
+
+
+
+def pathfix_unknown_files(unknown_txt, unknown_cache) -> List[str]:
+    unknown_files=[]
+    with open(unknown_cache, "r") as fh:
+       for w in fh.read().splitlines():
+         unknown_files.append(unknown_cache + w)
+    return unknown_files
+    
+
+def get_assets(assets):
+  assets = AssetPack()
   for asset, cache in assets:
-      tf.keras.utils.get_file(origin=asset, untar=True, cache_subdir=cache)
+    tf.keras.utils.get_file(origin=asset, untar=True, cache_subdir=cache)
+    if Path(cache).name == 'speech_commands':
+      assets.background_path = Path(cache) / '_background_noise_'
+    elif Path(cache).name == 'unknown_files':
+      unknown_files_txt = Path(cache) / "unknown_files.txt"
+      assets.unknown_files = pathfix_unknown_files(unknown_files_txt, cache)
+
+    return assets
+        
+    
+        
+        
+        
 
 def get_examples(keyword, lang='en'):
   ds = None
@@ -123,6 +157,9 @@ def get_word_locations(split, lang='en'):
   return word_locations
 
 
+def get_samples(ds, few=FEW, split='train'):
+  ds = ds.shuffle(seed=42)
+  return ds[split][:few]
 
 
 
