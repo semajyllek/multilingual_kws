@@ -15,9 +15,10 @@ SEARCH_SPLITS = ['train', 'test', 'dev']
 FEW = 5
 
 
-class AssetPack(NamedTuple):
-  background_noise_path: str
-  unknown_files: List[str]
+class AssetPack:
+  def __init__(self) -> None:
+    self.background_noise_path: str = None
+    self.unknown_files: List[str] = None
   
 
 
