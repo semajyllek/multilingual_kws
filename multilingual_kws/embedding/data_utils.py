@@ -17,7 +17,7 @@ SEARCH_SPLITS = ['train', 'test', 'dev']
 FEW = 5
 
 
-class AssetPack(BaseModel):
+class AssetPack:
   background_noise_path: str
   unknown_files: List[str]
 
