@@ -20,7 +20,7 @@ class AssetPack:
         self.background_noise_path: str = None
         self.unknown_files: List[str] = None
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         return f"background_noise_path: {self.background_noise_path}, unknown_files: {self.unknown_files}"
 
 
@@ -43,7 +43,7 @@ def get_assets(assets):
     for asset, cache in assets:
         tf.keras.utils.get_file(origin=asset, untar=True, cache_subdir=cache)
         if Path(cache).name == 'speech_commands':
-          apack.background_path = Path(cache) / '_background_noise_'
+          apack.background_noise_path = Path(cache) / '_background_noise_'
         elif Path(cache).name == 'unknown_files':
             unknown_files_txt = Path(cache) / "unknown_files.txt"
             apack.unknown_files = pathfix_unknown_files(unknown_files_txt)
