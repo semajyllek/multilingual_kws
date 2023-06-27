@@ -38,6 +38,11 @@ def to_micro_spectrogram(model_settings, audio):
 def file2spec(model_settings, filepath):
     """there's a version of this that adds bg noise in AudioDataset"""
     audio_binary = tf.io.read_file(filepath)
+    return audio2spec(model_settings, audio_binary)
+   
+
+def audio2spec(model_settings, audio_binary):
+    """there's a version of this that adds bg noise in AudioDataset"""
     audio, _ = tf.audio.decode_wav(
         audio_binary,
         desired_channels=1,
