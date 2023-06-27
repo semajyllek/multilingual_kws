@@ -1,6 +1,4 @@
-from pydantic import BaseModel
-
-from typing import List
+from typing import List, NamedTuple
 
 from datasets import concatenate_datasets, load_dataset, Dataset
 from collections import defaultdict
@@ -17,9 +15,10 @@ SEARCH_SPLITS = ['train', 'test', 'dev']
 FEW = 5
 
 
-class AssetPack:
+class AssetPack(NamedTuple):
   background_noise_path: str
   unknown_files: List[str]
+  
 
 
 
