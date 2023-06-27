@@ -16,9 +16,14 @@ FEW = 5
 
 
 class AssetPack:
-  def __init__(self) -> None:
-    self.background_noise_path: str = None
-    self.unknown_files: List[str] = None
+    def __init__(self) -> None:
+        self.background_noise_path: str = None
+        self.unknown_files: List[str] = None
+
+    def __str__(self) -> str:
+        return f"background_noise_path: {self.background_noise_path}, unknown_files: {self.unknown_files}"
+
+
   
 
 
