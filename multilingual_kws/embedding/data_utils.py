@@ -25,11 +25,11 @@ class AssetPack:
 
 
 
-def pathfix_unknown_files(unknown_txt, unknown_cache) -> List[str]:
+def pathfix_unknown_files(unknown_txt_path: Path) -> List[str]:
     unknown_files=[]
-    with open(unknown_cache, "r") as fh:
+    with open(unknown_txt_path, "r") as fh:
        for w in fh.read().splitlines():
-         unknown_files.append(unknown_cache + w)
+         unknown_files.append(unknown_txt_path.parent / w)
     return unknown_files
     
 
@@ -41,7 +41,7 @@ def get_assets(assets):
           apack.background_path = Path(cache) / '_background_noise_'
         elif Path(cache).name == 'unknown_files':
             unknown_files_txt = Path(cache) / "unknown_files.txt"
-            apack.unknown_files = pathfix_unknown_files(unknown_files_txt, cache)
+            apack.unknown_files = pathfix_unknown_files(unknown_files_txt)
     return apack
         
     
