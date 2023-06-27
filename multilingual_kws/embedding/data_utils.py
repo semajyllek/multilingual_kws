@@ -21,7 +21,7 @@ class AssetPack:
         self.unknown_files: List[str] = None
 
     def __repr__(self) -> str:
-        return f"background_noise_path: {self.background_noise_path}, unknown_files: {self.unknown_files}"
+        return f"background_noise_path: {self.background_noise_path}, number of unknown_files: {len(self.unknown_files)}"
 
 
   
@@ -34,7 +34,8 @@ def pathfix_unknown_files(unknown_txt_path: Path) -> List[str]:
     unknown_files=[]
     with open(unknown_txt_path, "r") as fh:
        for w in fh.read().splitlines():
-         unknown_files.append(unknown_txt_path.parent / w)
+         upath  = unknown_txt_path.parent / w
+         unknown_files.append(upath.as_posix())
     return unknown_files
     
 
