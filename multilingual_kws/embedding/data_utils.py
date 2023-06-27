@@ -34,16 +34,16 @@ def pathfix_unknown_files(unknown_txt, unknown_cache) -> List[str]:
     
 
 def get_assets(assets):
-  assets = AssetPack()
+  apack = AssetPack()
   for asset, cache in assets:
     tf.keras.utils.get_file(origin=asset, untar=True, cache_subdir=cache)
     if Path(cache).name == 'speech_commands':
-      assets.background_path = Path(cache) / '_background_noise_'
+      apack.background_path = Path(cache) / '_background_noise_'
     elif Path(cache).name == 'unknown_files':
       unknown_files_txt = Path(cache) / "unknown_files.txt"
-      assets.unknown_files = pathfix_unknown_files(unknown_files_txt, cache)
+      apack.unknown_files = pathfix_unknown_files(unknown_files_txt, cache)
 
-    return assets
+    return apack
         
     
         
