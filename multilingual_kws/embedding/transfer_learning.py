@@ -10,6 +10,19 @@ import sys
 
 import multilingual_kws.embedding.input_data as input_data
 
+EMBEDDING_MODEL_PATH = "./embedding_model/multilingual_context_73_0.8011"
+
+
+def get_embedding_model():
+    base_model = tf.keras.models.load_model(EMBEDDING_MODEL_PATH)
+    embedding = tf.keras.models.Model(
+        name="embedding_model",
+        inputs=base_model.inputs,
+        outputs=base_model.get_layer(name="dense_2").output,
+    )
+    embedding.trainable = False
+    return embedding
+
 
 def transfer_learn(
     target,
